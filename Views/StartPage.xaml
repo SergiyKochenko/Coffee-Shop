@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Root element for the XAML content page -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Coffee_Shop.Views.StartPage"
+             Title=""
+             BackgroundColor="Green">
+
+    <!-- Vertical stack layout to arrange child elements vertically -->
+    <VerticalStackLayout>
+
+        <!-- Grid layout with three rows for header, image, and action button -->
+        <Grid RowDefinitions="Auto,*,Auto" Padding="15,25">
+
+            <!-- Label displaying the title of the coffee shop -->
+            <Label Grid.Row="0"
+                   Text="Coffee shop"
+                   TextColor="Black"
+                   FontSize="60"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"/>
+
+            <!-- Image displaying the coffee shop logo -->
+            <Image Grid.Row="1"
+                   Source="coffee_shop.png"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HeightRequest="300"
+                   WidthRequest="300"/>
+
+            <!-- Vertical stack layout for description and action button -->
+            <VerticalStackLayout Grid.Row="2" Spacing="15">
+
+                <!-- Label with a bold title for quick delivery message -->
+                <Label Text="Fastest delivery to all customers"
+                       TextColor="Yellow"
+                       FontSize="30"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"/>
+
+                <!-- Label with description text about coffee and food -->
+                <Label Text="Feel the fine aroma of drinks and nice fast food"
+                       TextColor="Yellow"
+                       HorizontalOptions="Center"
+                       FontSize="18"/>
+
+                <!-- Border acting as a button with gesture recognizer for tapping -->
+                <Border StrokeThickness="0" 
+                        StrokeShape="RoundRectangle 15" 
+                        BackgroundColor="Red"
+                        HeightRequest="60"
+                        WidthRequest="400"
+                        VerticalOptions="End"
+                        HorizontalOptions="Center"
+                        Padding="30, 10">
+
+                    <!-- Gesture recognizer for tap event -->
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                    </Border.GestureRecognizers>
+
+                    <!-- Horizontal stack layout to center contents -->
+                    <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+
+                        <!-- Label for action button text -->
+                        <Label Text="Check in"
+                               TextColor="Black"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+
+                        <!-- Image for a right arrow icon -->
+                        <Image Source="right_arrow.png"
+                               HeightRequest="30"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

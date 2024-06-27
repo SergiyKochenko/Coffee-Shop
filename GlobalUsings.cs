@@ -1,0 +1,11 @@
+﻿global using System;
+global using Newtonsoft.Json;
+global using System.Collections.ObjectModel;
+global using Coffee_Shop.Services;
+global using Coffee_Shop.Models;
+global using Coffee_Shop.ViewModels;
+global using Coffee_Shop.Views;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using CommunityToolkit.Maui.Alerts;
+global using CommunityToolkit.Maui.Core;

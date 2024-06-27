@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Coffee_Shop.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:local="clr-namespace:Coffee_Shop"
+    xmlns:project="clr-namespace:Coffee_Shop.Views"
+    Shell.FlyoutBehavior="Disabled"
+    BackgroundColor="DarkGoldenrod">
+    <Shell.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="DarkGoldenrod" />
+    </Shell.Behaviors>
+    <ShellContent
+        Title="Start"
+        ContentTemplate="{DataTemplate project:StartPage}"
+        Route="StartPage" />
+
+
+</Shell>

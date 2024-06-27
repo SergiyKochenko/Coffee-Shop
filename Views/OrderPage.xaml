@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Root element for the XAML content page -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:Coffee_Shop.ViewModels"
+             xmlns:models="clr-namespace:Coffee_Shop.Models"
+             x:Class="Coffee_Shop.Views.OrderPage"
+             x:DataType="vm:OrderViewModel"
+             BackgroundColor="Green"
+             Title="">
+
+    <!-- Toolbar item for clearing the cart -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Clear Cart" Command="{Binding ClearCartCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <!-- Grid layout for arranging the content with padding -->
+    <Grid Padding="10,10">
+
+        <!-- ScrollView to enable vertical scrolling -->
+        <ScrollView>
+
+            <!-- Vertical stack layout for stacking the CollectionView and other elements -->
+            <VerticalStackLayout Padding="10">
+
+                <!-- CollectionView to display a list of items in the cart -->
+                <CollectionView ItemsSource="{Binding Items}">
+
+                    <!-- Layout settings for items in the CollectionView -->
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+
+                    <!-- Item template for the CollectionView items -->
+                    <CollectionView.ItemTemplate>
+                        <!-- Data template for each item in the cart -->
+                        <DataTemplate x:DataType="models:Product">
+
+                            <!-- Border surrounding each cart item -->
+                            <Border StrokeShape="RoundRectangle 5"
+                                    StrokeThickness="0"
+                                    Padding="20"
+                                    BackgroundColor="Yellow">
+
+                                <!-- Grid layout for cart item details -->
+                                <Grid ColumnDefinitions="25,Auto,50,*,80,25" ColumnSpacing="10">
+
+                                    <!-- Label displaying the quantity of the item in the cart -->
+                                    <Label Grid.Column="0"
+                                           Text="{Binding CartQuantity}"
+                                           TextColor="Black"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"/>
+
+                                    <!-- Label displaying a multiplication symbol -->
+                                    <Label Grid.Column="1"
+                                           Text="X"
+                                           TextColor="Black"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"/>
+
+                                    <!-- Image displaying the product image -->
+                                    <Image Grid.Column="2"
+                                           Source="{Binding Image}"
+                                           HeightRequest="35"
+                                           WidthRequest="35"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+
+                                    <!-- Vertical stack layout for product name and price -->
+                                    <VerticalStackLayout Grid.Column="3"
+                                                         VerticalOptions="Center"
+                                                         Spacing="2">
+
+                                        <!-- Label displaying the product name -->
+                                        <Label Text="{Binding Name}" 
+                                               TextColor="Black" 
+                                               FontSize="20"
+                                               FontAttributes="Bold"/>
+
+                                        <!-- Label displaying the product price -->
+                                        <Label Text="{Binding Price, StringFormat='${0:N2}'}"
+                                               TextColor="Black"
+                                               FontSize="15"
+                                               FontAttributes="Bold"/>
+                                    </VerticalStackLayout>
+
+                                    <!-- Label displaying the total amount for the item -->
+                                    <Label Grid.Column="4"
+                                           Text="{Binding Amount, StringFormat='${0:N2}'}"
+                                           TextColor="Black"
+                                           FontSize="20"
+                                           FontAttributes="Bold"/>
+
+                                    <!-- Image for the trash icon to remove the item -->
+                                    <Image Grid.Column="5"
+                                           Source="trash.png"
+                                           HeightRequest="25"
+                                           WidthRequest="25"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="End">
+
+                                        <!-- Behavior to tint the trash icon color -->
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Red"/>
+                                        </Image.Behaviors>
+
+                                        <!-- Gesture recognizer to handle taps on the trash icon -->
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:OrderViewModel}}, Path=RemoveCartItemCommand}"
+                                                                  CommandParameter="{Binding Name}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Border surrounding the user details input section -->
+                <Border StrokeShape="RoundRectangle 10"
+                        StrokeThickness="0"
+                        HorizontalOptions="Center"
+                        WidthRequest="550"
+                        Margin="10"
+                        Padding="10"
+                        BackgroundColor="NavajoWhite">
+
+                    <!-- Stack layout for arranging the user details input fields -->
+                    <StackLayout>
+
+                        <!-- Label for the user details section title -->
+                        <Label Text="Enter Your Details"
+                               TextColor="Black"
+                               FontAttributes="Bold"
+                               FontSize="20"
+                               HorizontalOptions="CenterAndExpand"
+                               Margin="10" />
+
+                        <!-- Entry field for the customer name -->
+                        <Entry Placeholder="Please enter Your Full Name"
+                               Text="{Binding CustomerName}"
+                               TextColor="Black"
+                               FontAttributes="Bold"
+                               Margin="20,20"
+                               x:Name="CustomerName"
+                               HorizontalOptions="CenterAndExpand"/>
+
+                        <!-- Entry field for the customer phone number -->
+                        <Entry Placeholder="Please enter contact Phone Number"
+                               Text="{Binding CustomerPhone}"
+                               TextColor="Black"
+                               FontAttributes="Bold"
+                               Margin="20,20"
+                               x:Name="PhoneNumber"
+                               HorizontalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Border surrounding the total amount and place order button -->
+        <Border StrokeShape="RoundRectangle 5"
+                StrokeThickness="0"
+                BackgroundColor="DarkGoldenrod"
+                VerticalOptions="End"
+                Margin="5"
+                Padding="10">
+
+            <!-- Grid layout for total amount and place order button -->
+            <Grid ColumnDefinitions="*,*">
+
+                <!-- Label displaying the total amount -->
+                <Label Grid.Column="0"
+                       Padding="18,0"
+                       TextColor="Black"
+                       VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <!-- Span for total text -->
+                            <Span Text="Total: &#10;"
+                                  FontSize="20"
+                                  FontAttributes="Bold"/>
+                            <!-- Span for total amount -->
+                            <Span Text="{Binding TotalAmount, StringFormat='${0:N2}'}"
+                                  TextColor="Black"
+                                  FontSize="20"
+                                  FontAttributes="Bold"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <!-- Button to place the order -->
+                <Button Grid.Column="1"
+                        Text="PlaceOrder"
+                        TextColor="Black"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        BackgroundColor="LightSeaGreen"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        CornerRadius="5"
+                        Padding="25,10"
+                        Clicked="Button_Clicked"/>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Declares the root element of the XAML content page -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:Coffee_Shop.ViewModels"
+             xmlns:models="clr-namespace:Coffee_Shop.Models"
+             x:Class="Coffee_Shop.Views.AllProductPage"
+             x:DataType="vm:AllProductViewModel"
+             Title=""
+             BackgroundColor="Green"
+             Padding="15">
+
+    <!-- Defines a grid with two rows -->
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Search bar at the top of the grid -->
+        <SearchBar Grid.Row="0"
+                   x:Name="searchBar"
+                   Text="Search product..."
+                   PlaceholderColor="LightYellow"
+                   TextColor="Black"
+                   CancelButtonColor="Red"
+                   SearchCommand="{Binding SearchProductsCommand}"
+                   SearchCommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
+                   TextChanged="searchBar_TextChanged"/>
+
+        <!-- Scrollable area that takes up the remaining space in the grid -->
+        <ScrollView Grid.Row="1" Margin="5">
+            <VerticalStackLayout>
+
+                <!-- CollectionView to display a list of products -->
+                <CollectionView ItemsSource="{Binding Products}">
+                    <CollectionView.ItemTemplate>
+                        <!-- Template for each item in the product list -->
+                        <DataTemplate x:DataType="models:Product">
+                            <Border StrokeShape="RoundRectangle 10"
+                                    StrokeThickness="0"
+                                    BackgroundColor="Yellow"
+                                    Padding="10"
+                                    Margin="5">
+
+                                <!-- Grid to layout product details -->
+                                <Grid ColumnDefinitions="120, *">
+                                    <!-- Product image -->
+                                    <Image Grid.Column="0"
+                                           Source="{Binding Image}"
+                                           HeightRequest="120"
+                                           WidthRequest="120"
+                                           />
+
+                                    <!-- Vertical stack layout for product name and pricing details -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+
+                                        <!-- Product name label -->
+                                        <Label
+                                                Text="{Binding Name}"
+                                                TextColor="Black"
+                                                FontSize="20"
+                                                FontAttributes="Bold"/>
+
+                                        <!-- Grid for product price and rating -->
+                                        <Grid ColumnDefinitions="*,*" Padding="20, 5">
+                                            <!-- Product price label -->
+                                            <Label Grid.Column="0"
+                                                   Text="{Binding Price, StringFormat='${0:N2}'}"
+                                                   TextColor="Black"/>
+
+                                            <!-- Horizontal stack layout for product rating -->
+                                            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="2">
+                                                <!-- Rating value -->
+                                                <Label Text="4.5" TextColor="Black"/>
+                                                <!-- Star image for rating -->
+                                                <Image
+                                                     Source="star.png"
+                                                     HeightRequest="15"
+                                                     WidthRequest="15"
+                                                     >
+                                                    <Image.Behaviors>
+                                                        <toolkit:IconTintColorBehavior TintColor="Gold" />
+                                                    </Image.Behaviors>
+                                                </Image>
+                                            </HorizontalStackLayout>
+                                        </Grid>
+
+                                        <!-- Border for the 'View more' button -->
+                                        <Border StrokeShape="RoundRectangle 5"
+                                                StrokeThickness="0"
+                                                BackgroundColor="LightSeaGreen"
+                                                HeightRequest="45"
+                                                HorizontalOptions="Center"
+                                                Padding="30, 5">
+
+                                            <!-- Horizontal stack layout for 'View more' button content -->
+                                            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                                                <!-- 'View more' label -->
+                                                <Label
+                                                      Text="View more"
+                                                      TextColor="Black"
+                                                      FontSize="18"
+                                                      VerticalOptions="Center"
+                                                      HorizontalOptions="Center"/>
+                                                <!-- Right arrow image -->
+                                                <Image
+                                                      Source="right_arrow"
+                                                      HeightRequest="30"
+                                                      VerticalOptions="Center"
+                                                      HorizontalOptions="Center"
+                                                      />
+                                            </HorizontalStackLayout>
+
+                                            <!-- Tap gesture recognizer for 'View more' button -->
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:AllProductViewModel}},Path=GoToDetailPageCommand}"
+                                                                      CommandParameter="{Binding .}"/>
+                                            </Border.GestureRecognizers>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Activity indicator that spans both rows, centered horizontally and vertically -->
+        <ActivityIndicator Grid.RowSpan="2"
+                    IsRunning="{Binding Searching}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Color="LightSeaGreen" />
+    </Grid>
+</ContentPage>

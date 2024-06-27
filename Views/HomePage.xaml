@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Declares the root element of the XAML content page -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:Coffee_Shop.ViewModels"
+             xmlns:models="clr-namespace:Coffee_Shop.Models"
+             x:Class="Coffee_Shop.Views.HomePage"
+             x:DataType="vm:HomeViewModel"
+             Title=""
+             Padding="20"
+             BackgroundColor="Green">
+
+    <!-- ScrollView allows vertical scrolling of content -->
+    <ScrollView>
+        <!-- Main vertical stack layout for arranging content -->
+        <VerticalStackLayout Spacing="15" Padding="15">
+
+            <!-- Label for the page title -->
+            <Label
+                Text="Coffee Shop"
+                FontSize="45"
+                TextColor="Black"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center" />
+
+            <!-- Border for a limited lunch offer section -->
+            <Border StrokeShape="RoundRectangle 5"
+                    StrokeThickness="0"
+                    BackgroundColor="Yellow"
+                    Padding="10">
+                <Grid ColumnDefinitions="*,150"
+                      RowDefinitions="*,Auto">
+
+                    <!-- Vertical stack layout for offer details -->
+                    <VerticalStackLayout Grid.Column="0" Grid.Row="0">
+                        <Label
+                            Text="Limited lunch Offer"
+                            FontSize="25"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center" />
+                        <Label
+                            Text="Take this limited offer before 01:00 pm."
+                            TextColor="Black" />
+                    </VerticalStackLayout>
+
+                    <!-- Image for the offer section -->
+                    <Image Grid.Column="1"
+                           Grid.RowSpan="2"
+                           Source="home_page_coffee.png"
+                           HeightRequest="160"
+                           WidthRequest="160" />
+                </Grid>
+            </Border>
+
+            <!-- Border for "All Products" section -->
+            <Border Stroke="Yellow"
+                    StrokeShape="RoundRectangle 5"
+                    StrokeThickness="2"
+                    Padding="8,8"
+                    BackgroundColor="LightSeaGreen">
+                <Label Text="All Products"
+                       TextColor="Black"
+                       FontSize="20"
+                       Padding="5,8"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center" />
+
+                <!-- TapGestureRecognizer to handle taps and navigate to all products -->
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" Command="{Binding GoToAllProductsCommand}" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Grid layout for different product categories -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="5">
+
+                <!-- Border for "Burgers" category -->
+                <Border Grid.Column="0"
+                        Stroke="Yellow"
+                        StrokeShape="RoundRectangle 5"
+                        StrokeThickness="2"
+                        BackgroundColor="LightSeaGreen"
+                        Padding="8,8"
+                        HorizontalOptions="Center">
+                    <Label 
+                        Text="Burgers"
+                        TextColor="Black"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center" />
+
+                    <!-- TapGestureRecognizer to handle taps and navigate to burgers category -->
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"
+                                              Command="{Binding GoToFoodCategoryCommand}" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <!-- Border for "Hot Drinks" category -->
+                <Border Grid.Column="1"
+                        Stroke="Yellow"
+                        StrokeShape="RoundRectangle 5"
+                        StrokeThickness="2"
+                        BackgroundColor="LightSeaGreen"
+                        Padding="8,8"
+                        HorizontalOptions="Center">
+                    <Label 
+                           Text="Hot Drinks"
+                           TextColor="Black"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
+
+                    <!-- TapGestureRecognizer to handle taps and navigate to hot drinks category -->
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2"  Command="{Binding GoToHotDrinkCategoryCommand}" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <!-- Border for "Cold Drinks" category -->
+                <Border Grid.Column="2"
+                        Stroke="Yellow"
+                        StrokeShape="RoundRectangle 5"
+                        StrokeThickness="2"
+                        BackgroundColor="LightSeaGreen"
+                        Padding="10,8"
+                        HorizontalOptions="Center">
+                    <Label 
+                           Text="Cold Drinks"
+                           TextColor="Black"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
+
+                    <!-- TapGestureRecognizer to handle taps and navigate to cold drinks category -->
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_3"  Command="{Binding GoToColdDrinkCategoryCommand}" />
+                    </Border.GestureRecognizers>
+                </Border>
+            </Grid>
+
+            <!-- FlexLayout for displaying a list of products -->
+            <FlexLayout BindableLayout.ItemsSource="{Binding Products}" Wrap="Wrap">
+                <BindableLayout.ItemTemplate>
+
+                    <!-- Data template for each product item -->
+                    <DataTemplate x:DataType="models:Product">
+                        <Border FlexLayout.Basis="50%"
+                            StrokeShape="RoundRectangle 10"
+                                StrokeThickness="0"
+                                BackgroundColor="Yellow"
+                                Padding="10"
+                                Margin="2">
+
+                            <!-- Grid layout for product image and details -->
+                            <Grid RowDefinitions="120,Auto,Auto,Auto" RowSpacing="5">
+
+                                <!-- Image displaying the product -->
+                                <Image Grid.Row="0"
+                                    Source="{Binding Image}"
+                                    HeightRequest="120"
+                                    WidthRequest="100"/>
+
+                                <!-- Label displaying the product name -->
+                                <Label Grid.Row="1"
+                                       Text="{Binding Name}"
+                                       TextColor="Black"
+                                       FontSize="18"
+                                       HorizontalTextAlignment="Center" />
+
+                                <!-- Grid layout for price and rating -->
+                                <Grid Grid.Row="2"
+                                      ColumnDefinitions="*,*">
+                                    <Label
+                                        Text="{Binding Price,StringFormat='${0:N2}'}"
+                                        TextColor="Black"
+                                        Padding="30,0,0,0"/>
+
+                                    <!-- Horizontal stack layout for the rating -->
+                                    <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="2" Padding="0,0,20,0">
+                                        <Label Text="4.5" TextColor="Black"/>
+                                        <Image
+                                            Source="star.png"
+                                            HeightRequest="15"
+                                            WidthRequest="15">
+
+                                            <!-- Behavior to tint the star icon color -->
+                                            <Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="DarkGoldenrod" />
+                                            </Image.Behaviors>
+                                        </Image>
+                                    </HorizontalStackLayout>
+                                </Grid>
+
+                                <!-- Button for viewing more details of the product -->
+                                <Button Grid.Row="3"
+                                    Text="View more"
+                                    TextColor="Black"
+                                    BackgroundColor="LightSeaGreen"
+                                    FontAttributes="Bold"
+                                    CornerRadius="5"
+                                    VerticalOptions="End"
+                                    HorizontalOptions="Start"
+                                    Padding="25,5"
+                                    Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=GoToDetailPageCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </Grid>
+
+                            <!-- TapGestureRecognizer for navigating to the product detail page -->
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=GoToDetailPageCommand}"
+                                CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

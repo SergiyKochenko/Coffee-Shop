@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Declares the root element of the XAML content page -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Coffee_Shop.Views.CheckoutPage"
+             Title="Checkout Order"
+             BackgroundColor="Green">
+
+    <!-- Vertical stack layout to center content both vertically and horizontally -->
+    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+
+        <!-- Image element to display a checkmark icon -->
+        <Image
+            Source="check.png"
+            HeightRequest="300"
+            WidthRequest="150">
+            <!-- Behavior to apply a tint color to the image -->
+            <Image.Behaviors>
+                <toolkit:IconTintColorBehavior TintColor="Orange"/>
+            </Image.Behaviors>
+        </Image>
+
+        <!-- Label to display the order success message -->
+        <Label 
+            Text="Order Successfully Placed"
+            TextColor="Orange"
+            FontSize="33"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+    </VerticalStackLayout>
+
+</ContentPage>

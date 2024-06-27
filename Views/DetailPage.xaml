@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Declares the root element of the XAML content page -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:Coffee_Shop.ViewModels"
+             xmlns:models="clr-namespace:Coffee_Shop.Models"
+             x:Class="Coffee_Shop.Views.DetailPage"
+             x:DataType="vm:DetailViewModel"
+             Title=""
+             BackgroundColor="Green"
+             Shell.NavBarIsVisible="False">
+
+    <!-- Behavior to set the status bar color and style -->
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
+
+    <!-- Main grid layout to arrange content -->
+    <Grid>
+
+        <!-- Scrollable content area with padding -->
+        <ScrollView Padding="20">
+            <VerticalStackLayout Spacing="15">
+
+                <!-- Image displaying the product -->
+                <Image
+                    Source="{Binding Product.Image}"
+                    HeightRequest="200"
+                    WidthRequest="200"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+
+                <!-- Label displaying the product name -->
+                <Label
+                    Text="{Binding Product.Name}"
+                    TextColor="Black"
+                    FontSize="30"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"/>
+
+                <!-- Grid layout for price and rating -->
+                <Grid ColumnDefinitions="*,*" Padding="20, 5">
+                    <Label Grid.Column="0"
+                         Text="{Binding Product.Price,StringFormat='${0:N2}'}"
+                         TextColor="Black"
+                         FontSize="20"
+                         FontAttributes="Bold"
+                         Padding="20,0,0,0"
+                     />
+
+                    <!-- Horizontal stack layout for the rating -->
+                    <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="2" Padding="0,0,20,0">
+                        <Label 
+                            Text="4.5" 
+                            TextColor="Black"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            />
+                        <Image
+                        Source="star.png"
+                        HeightRequest="15"
+                        WidthRequest="15">
+
+                            <!-- Behavior to tint the star icon color -->
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="DarkOrange" />
+                            </Image.Behaviors>
+                        </Image>
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <!-- Label for the product description header -->
+                <Label Text="Description:"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       Margin="0,10"/>
+
+                <!-- Label displaying the product description -->
+                <Label Text="{Binding Product.Description}"
+                       TextColor="Yellow"
+                       FontAttributes="Bold"
+                       FontSize="20" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Border element for the bottom box containing purchase controls -->
+        <Border StrokeThickness="0"
+                StrokeShape="RoundRectangle 10"
+                x:Name="bottomBox"
+                BackgroundColor="DarkGreen"
+                Margin="200,0"
+                VerticalOptions="End"
+                HeightRequest="150"
+                Padding="15">
+
+            <!-- Shadow effect for the border -->
+            <Border.Shadow>
+                <Shadow Brush="LightSeaGreen" Radius="100"/>
+            </Border.Shadow>
+
+            <!-- Grid layout within the border for price, quantity controls, and view cart button -->
+            <Grid RowDefinitions="Auto,Auto"
+                  ColumnDefinitions="*,*" Padding="20" ColumnSpacing="5">
+
+                <!-- Label displaying the total amount -->
+                <Label Grid.Row="0" Grid.Column="0"
+                    Text="{Binding Product.Amount, StringFormat='${0:N2}'}"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    TextColor="Black"
+                    VerticalOptions="Center"/>
+
+                <!-- Grid layout for the quantity controls -->
+                <Grid Grid.Row="0" Grid.Column="1"
+                      ColumnDefinitions="60,50,50"
+                      HorizontalOptions="End"
+                      VerticalOptions="Center">
+
+                    <!-- Button to decrease the quantity -->
+                    <ImageButton Grid.Row="0" Grid.Column="0"
+                           Source="minus.png"
+                           HeightRequest="30"
+                           WidthRequest="30"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Start"
+                           Command="{Binding RemoveFromCartCommand}">
+
+                        <!-- Behavior to tint the button icon color -->
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="LightSeaGreen" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+
+                    <!-- Label displaying the current quantity in the cart -->
+                    <Label Grid.Column="1" Grid.Row="0"
+                           Text="{Binding Product.CartQuantity}"
+                           TextColor="Black"
+                           FontSize="20"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+
+                    <!-- Button to increase the quantity -->
+                    <ImageButton Grid.Column="2" Grid.Row="0"
+                       Source="add.png"
+                       HeightRequest="30"
+                       WidthRequest="30"
+                       VerticalOptions="Center"
+                       HorizontalOptions="End"
+                       Command="{Binding AddToCartCommand}">
+
+                        <!-- Behavior to tint the button icon color -->
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="LightSeaGreen"/>
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+
+                </Grid>
+
+                <!-- Button to navigate to the cart page -->
+                <Button 
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Text="View Cart"
+                    TextColor="Black"
+                    FontSize="18"
+                    BackgroundColor="LightSeaGreen"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Padding="200,10"
+                    Margin="0,10"
+                    Command="{Binding ViewCartCommand}"/>
+            </Grid>
+        </Border>
+
+        <!-- Button to navigate back -->
+        <ImageButton
+            Source="back"
+            HeightRequest="30"
+            WidthRequest="30"
+            VerticalOptions="Start"
+            HorizontalOptions="Start"
+            Margin="15"
+            Clicked="ImageButton_Clicked">
+
+            <!-- Behavior to tint the button icon color -->
+            <ImageButton.Behaviors>
+                <toolkit:IconTintColorBehavior TintColor="LightGreen" />
+            </ImageButton.Behaviors>
+        </ImageButton>
+
+    </Grid>
+</ContentPage>

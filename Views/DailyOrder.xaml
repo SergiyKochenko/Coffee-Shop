@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Declares the root element of the XAML content page -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:Coffee_Shop.ViewModels"
+             xmlns:models="clr-namespace:Coffee_Shop.Models"
+             x:Class="Coffee_Shop.Views.DailyOrder"
+             x:DataType="vm:DailyOrderViewModel"
+             Title=""
+             Padding="15"
+             BackgroundColor="Green">
+
+    <!-- Scrollable container for the content -->
+    <ScrollView>
+
+        <!-- Vertical stack layout to organize content vertically -->
+        <VerticalStackLayout>
+
+            <!-- Label for the title of the page -->
+            <Label Text="LIST OF TOTAL ORDERS TODAY"
+                TextColor="Black"
+                TextDecorations="Underline"
+                FontSize="30"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="10"/>
+
+            <!-- Border to enclose the header labels -->
+            <Border StrokeShape="RoundRectangle 10"
+                      StrokeThickness="0"
+                      VerticalOptions="Center"
+                      Margin="5"
+                      Padding="5"
+                      BackgroundColor="Transparent">
+
+                <!-- Grid layout for the header labels with five columns -->
+                <Grid ColumnDefinitions="*,*,*,*,*"
+                       HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                      Padding="15" Margin="10" ColumnSpacing="20">
+
+                    <!-- Header label for Order Number -->
+                    <Label  Grid.Column="0"
+                            Text="Order Number"
+                            TextColor="Black"
+                            TextDecorations="Underline"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+
+                    <!-- Header label for Customer Name -->
+                    <Label  Grid.Column="1"
+                            Text="Customer Name"
+                            TextColor="Black"
+                            TextDecorations="Underline"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+
+                    <!-- Header label for Phone Number -->
+                    <Label  Grid.Column="2"
+                            Text="Phone Number"
+                            TextColor="Black"
+                            TextDecorations="Underline"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+
+                    <!-- Header label for Date -->
+                    <Label Grid.Column="3"
+                            Text="Date"
+                            TextColor="Black"
+                            TextDecorations="Underline"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+
+                    <!-- Header label for Total Amount -->
+                    <Label Grid.Column="4"
+                           Text="Total Amount"
+                           TextColor="Black"
+                           TextDecorations="Underline"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                </Grid>
+            </Border>
+
+            <!-- CollectionView to display the list of orders -->
+            <CollectionView ItemsSource="{Binding Orders}">
+                <CollectionView.ItemTemplate>
+
+                    <!-- Template for each item in the order list -->
+                    <DataTemplate x:DataType="models:Order">
+                        <Border StrokeShape="RoundRectangle 10"
+                      StrokeThickness="0"
+                      VerticalOptions="Center"
+                      Margin="5"
+                      Padding="5"
+                      BackgroundColor="Yellow">
+
+                            <!-- Grid layout for order details with five columns -->
+                            <Grid ColumnDefinitions="*,*,*,*,*"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                Padding="15" Margin="10" ColumnSpacing="20">
+
+                                <!-- Label to display order number -->
+                                <Label Grid.Column="0"
+                                     Text="{Binding OrderNumber}"
+                                     TextColor="Black"
+                                     FontSize="18"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"/>
+
+                                <!-- Label to display customer name -->
+                                <Label Grid.Column="1"
+                                     Text="{Binding CustomerName}"
+                                     TextColor="Black"
+                                     FontSize="18"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"/>
+
+                                <!-- Label to display customer phone number -->
+                                <Label Grid.Column="2"
+                                     Text="{Binding CustomerPhone}"
+                                     TextColor="Black"
+                                     FontSize="18"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"/>
+
+                                <!-- Label to display order date -->
+                                <Label Grid.Column="3"
+                                     Text="{Binding OrderDate}"
+                                     TextColor="Black"
+                                     FontSize="18"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"/>
+
+                                <!-- Label to display total amount with currency format -->
+                                <Label Grid.Column="4"
+                                   Text="{Binding TotalAmount,StringFormat='${0:N2}'}"
+                                   TextColor="Black"
+                                   FontSize="18"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
